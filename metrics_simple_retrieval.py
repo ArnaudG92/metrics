@@ -1,5 +1,5 @@
 """
-Dans ce fichier python, quelques exemples de code très simple pour le retrevial
+Dans ce fichier python, quelques exemples de code très simple pour le retrieval
 """
 import numpy as np
 import pandas as pd
@@ -25,7 +25,7 @@ print("F1-score  :", f1_score(y_true, y_pred))
 #on peut ensuite afficher nos résulats sur un graphique
 
 sns.barplot(data=data_metrics, x='name', y='score', palette="pastel")
-plt.title("Métrique de base pour le Retrevial")
+plt.title("Métrique de base pour le Retrieval")
 plt.show()
 
 #################################################################################################################
