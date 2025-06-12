@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import precision_score, recall_score, f1_score
 
+
 #Exemple de la partie Retrevial => 1:doc pertinent / 0: Doc non pertinent
 
 y_pred = [1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0]
