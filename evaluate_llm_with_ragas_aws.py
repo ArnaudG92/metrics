@@ -1,9 +1,8 @@
 from ragas.llms import LangchainLLMWrapper
 from ragas.embeddings import LangchainEmbeddingsWrapper
 from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_ollama.chat_models import ChatOllama
 
-from ragas import evaluate
+from ragas import evaluate, RunConfig
 from datasets import Dataset
 from ragas.metrics import (
     answer_correctness,
@@ -16,7 +15,7 @@ from ragas.metrics import (
 import pandas as pd
 
 from ChatBot import ChatbotLLM
-
+"""
 def generate_answer(llm,question, contexts):
     prompt = (
         "Answer the user question **only** with facts found in the context.\n\n"
@@ -28,25 +27,31 @@ def generate_answer(llm,question, contexts):
     response = llm.invoke(prompt)
 
     return response.content.strip()
+"""
 
 def load_csv_data():
     
-    data = pd.read_excel("data/input/data.xlsx")
+    data = pd.read_excel("data/input/data_V2.xlsx")
 
     # Extraire les colonnes en listes
     questions = data["question"].tolist()
     contexts = data["context"].tolist()
     ground_truths = data["reference"].tolist()
 
-    return questions, contexts, ground_truths
+    #valable si on a déjà la réponse de LLM
+    answer = data["answer"].tolist()
+
+    return questions, contexts, ground_truths, answer
 
 
 
-def get_dataset(llm, questions, ground_truths, contexts, rows):
+def get_dataset(llm, questions, ground_truths, contexts,answers, rows):
 
-    for question, ground_truth, context in zip(questions, ground_truths, contexts):
+    for question, ground_truth, context, answer in zip(questions, ground_truths, contexts, answers):
 
-        answer = generate_answer(llm, question, context)
+        #answer = generate_answer(llm, question, context)
+        #pour éviter de fair trop d'appel couteux
+    
         rows.append(
             {
                 "question": question,
@@ -56,19 +61,25 @@ def get_dataset(llm, questions, ground_truths, contexts, rows):
             }
         )
         print("-------------------------------------------------")
-        print(f"- Question : {question} \n - Response LLM : {answer}")
+        print(f"- Question : {question} \n - Response LLM (recup dans le dataset) : {answer}")
         print("------------------------------------------------- \n \n")
 
     return Dataset.from_list(rows)
 
 
 def Evaluations(ragas_llm, ragas_emb,evaluation_dataset):
+
+    my_config = RunConfig(
+    max_workers=1,
+    )
+
     scores = evaluate(
     evaluation_dataset,
     metrics=[answer_correctness, answer_relevancy, faithfulness,
              context_precision, context_recall],
     llm=ragas_llm,
     embeddings=ragas_emb,
+    run_config=my_config
 )
     return scores
 
@@ -97,19 +108,19 @@ def create_data_frame(rows, score_dict):
 #---------------------------------------------------------------------------------------
 def main():
     #création des modèle
-    llm = ChatOllama(model="gemma3:1b", temperature=0, timeout=120) #changer le nom du modèle 
+    llm = ChatbotLLM()
     ragas_llm = LangchainLLMWrapper(llm)
 
     emb = HuggingFaceEmbeddings(model_name="BAAI/bge-small-en-v1.5")
     ragas_emb = LangchainEmbeddingsWrapper(emb)
 
     #load question, contexte, réponse depuis fichier xlsx (data/input)
-    questions, contexts, ground_truths = load_csv_data()
+    questions, contexts, ground_truths, answer = load_csv_data()
 
     rows = []
 
     #création et évaluation de notre dataset
-    evaluation_dataset = get_dataset(llm, questions, ground_truths, contexts, rows) #création du dataset
+    evaluation_dataset = get_dataset(llm, questions, ground_truths, contexts, answer,  rows) #création du dataset
     scores = Evaluations(ragas_llm, ragas_emb, evaluation_dataset) #évaluation de notre dataset
 
     #affichage dans un exel
@@ -118,9 +129,9 @@ def main():
 
     df = create_data_frame(rows, score_dict)
     # Sauvegarder en Excel
-    df.to_excel("data/output/resultats_ragas_evaluation.xlsx", index=False)
+    df.to_excel("data/output/resultats_ragas_evaluation_V2.xlsx", index=False)
 
-    print("✅ Résultats enregistrés dans 'data/output/resultats_ragas_evaluation.xlsx'")
+    print("✅ Résultats enregistrés dans 'data/output/resultats_ragas_evaluation_V2.xlsx'")
 
 if __name__ == "__main__":
     main()

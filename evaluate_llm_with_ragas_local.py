@@ -23,7 +23,7 @@ from ragas.embeddings import LangchainEmbeddingsWrapper
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_ollama.chat_models import ChatOllama
 
-from ragas import evaluate
+from ragas import evaluate, RunConfig
 from datasets import Dataset
 from ragas.metrics import (
     answer_correctness,
@@ -81,12 +81,18 @@ def get_dataset(llm, questions, ground_truths, contexts, rows):
 
 
 def Evaluations(ragas_llm, ragas_emb,evaluation_dataset):
+
+    my_config = RunConfig(
+    max_workers=1,
+    )
+
     scores = evaluate(
     evaluation_dataset,
     metrics=[answer_correctness, answer_relevancy, faithfulness,
              context_precision, context_recall],
     llm=ragas_llm,
     embeddings=ragas_emb,
+    run_config=my_config
 )
     return scores
 
