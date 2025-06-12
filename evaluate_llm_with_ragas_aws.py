@@ -1,23 +1,3 @@
-from ragas import SingleTurnSample
-from ragas.metrics import BleuScore
-"""
-#----------------------------------------------------------------------------------------
-#Sans appel a des LLM (BLEU SCORE EXEMPLE)
-#----------------------------------------------------------------------------------------
-
-test_data = {
-    "user_input": "summarise given text\nThe company reported an 8% rise in Q3 2024, driven by strong performance in the Asian market. Sales in this region have significantly contributed to the overall growth. Analysts attribute this success to strategic marketing and product localization. The positive trend in the Asian market is expected to continue into the next quarter.",
-    "response": "The company experienced an 8% increase in Q3 2024, largely due to effective marketing strategies and product adaptation, with expectations of continued growth in the coming quarter.",
-    "reference": "The company reported an 8% growth in Q3 2024, primarily driven by strong sales in the Asian market, attributed to strategic marketing and localized products, with continued growth anticipated in the next quarter."
-}
-metric = BleuScore()
-test_data = SingleTurnSample(**test_data)
-print(metric.single_turn_score(test_data))
-"""
-#----------------------------------------------------------------------------------------
-#Avec appel LLM 
-#----------------------------------------------------------------------------------------
-
 from ragas.llms import LangchainLLMWrapper
 from ragas.embeddings import LangchainEmbeddingsWrapper
 from langchain_huggingface import HuggingFaceEmbeddings
@@ -34,6 +14,8 @@ from ragas.metrics import (
 )
 
 import pandas as pd
+
+from ChatBot import ChatbotLLM
 
 def generate_answer(llm,question, contexts):
     prompt = (
