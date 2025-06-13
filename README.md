@@ -17,6 +17,7 @@
   - [Retrieval](#python-retrieval) 
   - [Sans LLM](#python-retrieval-sans-llm)
   - [Avec RAGAS](#ragas-evaluation)
+  - [Note sur l’utilisation](#note-sur-l’utilisation)
 
 
 ## Introduction
@@ -178,4 +179,10 @@ Il y a dans ce fichier l'évaluation des métriques suivantes :
 
 ## A faire ... 
 
+## 🔐 Note sur l’utilisation
+
+Ce projet a été développé dans le cadre d’un stage.  
+Toute réutilisation, modification ou diffusion du code est strictement interdite sans l’autorisation explicite de l’auteur.
+
+Merci de respecter ce cadre.
 
