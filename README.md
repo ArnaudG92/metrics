@@ -14,6 +14,7 @@
   - [5. Re-ranking](#5--re-ranking)
   - [6. Réponses du LLM](#6--les-réponses-du-llm)
 - [Applications Python](#les-applications-en-python)
+  - [Retrieval](#python-retrieval) 
   - [Sans LLM](#python-retrieval-sans-llm)
   - [Avec RAGAS](#ragas-evaluation)
 
@@ -122,7 +123,7 @@ y_true = [1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1]
 - 1: Doc pertinent
 - 0: Doc non pertinent
 
-Pour celle qui prennent en compte le classement (fint du programme) :
+Pour celle qui prennent en compte le classement (fin du programme) :
 - MRR (Mean Reciprocal Rank)
 - Gain cumulatif actualisé normalisé
 
