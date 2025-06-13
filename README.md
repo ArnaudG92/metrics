@@ -7,11 +7,8 @@
 - [Introduction](#introduction)
 - [Objectifs](#objectifs)
 - [Solutions mises en place](#solutions-mises-en-place)
-- [Structure du dépôt](#structure-du-dépôt)
-- [Installation](#installation)
-- [Utilisation](#utilisation)
-- [Résultats](#résultats)
-- [Auteur](#auteur)
+- [Les applications en Python](#les-applications-en-python)
+
 
 ## Introduction
 
@@ -35,6 +32,52 @@ L’évaluation porte sur :
 - **L’évaluation finale des réponses générées**, à l’aide de métriques fournies par des outils comme RAGAS (factualité, complétude, etc.).
 
 L’objectif global est de comparer ces différentes approches pour identifier les combinaisons les plus efficaces et pertinentes dans un cadre d’utilisation concret.
+
+## Solutions mises en place
+
+### 1- La création d’un dataset d’évaluation
+
+blaaaaa
+
+### 2- L'Embeddings
+
+blaaaaa
+
+### 3- Chunking
+
+blaaaaa
+
+### 4- Retrieval
+
+blaaaaa
+
+### 5- Re-ranking
+
+blaaaaa
+
+### 6- Les réponses du LLM
+
+Deux méthodes possibles : 
+
+- **Métrique sans utilisation de LLM**
+- **Métrique avec utilisation de LLM**
+
+Pour les métriques qui n'utilisent pas de **LLM**, on retrouve la liste suivante (expliqué dans la carte mentale) : 
+- Bleu score
+- Rouge score
+- BERTScore
+- Meteor
+- MoverScore
+
+[Implémentation en Python](#)
+
+Pour les métriques qui utilisent un **LLM**, on retrouve la liste suivante (expliqué dans la carte mentale) : 
+- RAGAS -> de nombreuses métriques qui analysent les réponses sur plusieurs points ([plus d'info](#))
+
+
+## Les applications en Python
+
+explications du code... 
 
 
 ## A faire ... 
