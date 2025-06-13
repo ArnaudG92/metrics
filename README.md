@@ -17,7 +17,7 @@
   - [Retrieval](#python-retrieval) 
   - [Sans LLM](#python-retrieval-sans-llm)
   - [Avec RAGAS](#ragas-evaluation)
-  - [Note sur l’utilisation](#note-sur-l’utilisation)
+- [Note sur l’utilisation](#note-sur-l’utilisation)
 
 
 ## Introduction
