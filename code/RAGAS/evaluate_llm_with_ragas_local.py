@@ -47,9 +47,9 @@ def generate_answer(llm,question, contexts):
 
     return response.content.strip()
 
-def load_csv_data():
+def load_csv_data(name_doc):
     
-    data = pd.read_excel("data/input/data.xlsx")
+    data = pd.read_excel(name_doc)
 
     # Extraire les colonnes en listes
     questions = data["question"].tolist()
@@ -127,8 +127,13 @@ def main():
     emb = HuggingFaceEmbeddings(model_name="BAAI/bge-small-en-v1.5")
     ragas_emb = LangchainEmbeddingsWrapper(emb)
 
+    #-----------------------------------------
+    path_doc_input = "data/input/data_V2.xlsx"
+    path_doc_output = "data/output/resultats_ragas_evaluation.xlsx"
+    #-----------------------------------------
+
     #load question, contexte, réponse depuis fichier xlsx (data/input)
-    questions, contexts, ground_truths = load_csv_data()
+    questions, contexts, ground_truths = load_csv_data(path_doc_input)
 
     rows = []
 
@@ -142,9 +147,9 @@ def main():
 
     df = create_data_frame(rows, score_dict)
     # Sauvegarder en Excel
-    df.to_excel("data/output/resultats_ragas_evaluation.xlsx", index=False)
+    df.to_excel(path_doc_output, index=False)
 
-    print("✅ Résultats enregistrés dans 'data/output/resultats_ragas_evaluation.xlsx'")
+    print(f"✅ Résultats enregistrés dans '{path_doc_output}")
 
 if __name__ == "__main__":
     main()
