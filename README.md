@@ -7,7 +7,15 @@
 - [Introduction](#introduction)
 - [Objectifs](#objectifs)
 - [Solutions mises en place](#solutions-mises-en-place)
-- [Les applications en Python](#les-applications-en-python)
+  - [1. Création d’un dataset d’évaluation](#1--la-création-dun-dataset-dévaluation)
+  - [2. Embeddings](#2--lembeddings)
+  - [3. Chunking](#3--chunking)
+  - [4. Retrieval](#4--retrieval)
+  - [5. Re-ranking](#5--re-ranking)
+  - [6. Réponses du LLM](#6--les-réponses-du-llm)
+- [Applications Python](#les-applications-en-python)
+  - [Sans LLM](#python-retrieval-sans-llm)
+  - [Avec RAGAS](#ragas-evaluation)
 
 
 ## Introduction
@@ -69,7 +77,7 @@ Pour les métriques qui n'utilisent pas de **LLM**, on retrouve la liste suivant
 - Meteor
 - MoverScore
 
-[Implémentation en Python](#python-retrieval-sans-llm)
+[Implémentation en Python](#python-evaluation-reponse-sans-LLM)
 
 Pour les métriques qui utilisent un **LLM**, on retrouve la liste suivante (expliqué dans la carte mentale) : 
 - RAGAS -> de nombreuses métriques qui analysent les réponses sur plusieurs points ([plus d'info](#ragas-evaluation))
@@ -77,7 +85,7 @@ Pour les métriques qui utilisent un **LLM**, on retrouve la liste suivante (exp
 
 ## Les applications en Python
 
-### Python Retrieval sans LLM
+### Python évaluation réponse sans LLM
 
 Le fichier python correspondant : ```metrics_for_LLM_response_reference.py```
 
