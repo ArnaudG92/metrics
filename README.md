@@ -58,10 +58,23 @@ blaaaaa
 ### 4- Retrieval
 
 ```metrics_simple_retrieval.py```
+- Regroupement des différentes méthodes dans la carte mentale
+
+Le principal problème est de savoir si un document **est pertinent ou ne l'est pas** pour nos évaluations. Étiqueter manuellement la pertinence des documents est trop coûteux. Pour pallier cela, on utilise un LLM juge, capable d’annoter chaque document avec un score de pertinence :
+
+| Score | Signification         |
+| ----- | --------------------- |
+| 3     | Très pertinent        |
+| 2     | Pertinent             |
+| 1     | Moyennement pertinent |
+| 0     | Pas pertinent         |
+
+  [Exemple en python](#python-retrieval)
 
 ### 5- Re-ranking
 
-```metrics_simple_retrieval.py```
+```metrics_simple_retrieval.py``` (dans la deuxième partie)
+- [Exemple en python](#python-retrieval)
 
 ### 6- Les réponses du LLM
 
@@ -85,11 +98,43 @@ Pour les métriques qui utilisent un **LLM**, on retrouve la liste suivante (exp
 
 ## Les applications en Python
 
-### Python évaluation réponse sans LLM
+### Python Retrieval 
 
 Le fichier python correspondant : ```metrics_for_LLM_response_reference.py```
 
-Dans ce fichier, à partir d'une réponse de référence et d'une question génerée, on calcul les différentes métriques que l'on affiche dans un graphique à bar.
+On discerne deux types de métriques : 
+- Celles qui prennent compte du **classemment**
+- Celles qui ne prennent pas compte du **classemment**
+
+Pour celle qui ne prennent pas en compte le classement (début du programme) :
+- Précision
+- Rappel
+- F1-score
+
+**PS** : Utilisation du module **sklearn.metrics**
+
+Données : 
+
+``` python
+y_pred = [1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0]
+y_true = [1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1]
+```
+- 1: Doc pertinent
+- 0: Doc non pertinent
+
+Pour celle qui prennent en compte le classement (fint du programme) :
+- MRR (Mean Reciprocal Rank)
+- Gain cumulatif actualisé normalisé
+
+Ces métriques évaluent si les documents les plus pertinents sont bien en haut du classement.
+
+Utilisation de ```ir_measures``` : ⚠️ nécessite un compilateur pour lancement
+
+### Python évaluation réponse sans LLM
+
+Le fichier python correspondant : ```metrics_simple_retrieval.py```
+
+Dans ce fichier, à partir d'une réponse de référence et d'une question génerée, on calcule les différentes métriques que l'on affiche dans un graphique à barres.
 
 Analyse des résultats : 
 - Bleu score ne comprends pas les synonyme (à part si on veut des mots clés, pas très utile)
@@ -104,9 +149,9 @@ Le fichier python correspondant :
 
 Pour modifier les données de traitement : ```./data/input```
 
-Dans ce fichier, à partir d'une réponse de référence et d'une question génerée, on calcul les différentes métriques que l'on affiche dans un graphique à bar.
+Dans ce fichier, à partir d'une réponse de référence et d'une question génerée, on calcule les différentes métriques que l'on affiche dans un graphique à bar.
 
-🛑 Problème de timeOut, la LLM prends trop sont temps pour répondre, on est donc obligé de l'empecher de travailler sur plusieurs métriques simultanément 
+🛑 Problème de timeOut, le LLM prends trop de temps pour répondre, on est donc obligé de l'empecher de travailler sur plusieurs métriques simultanément 
 
 ``` Python 
 my_config = RunConfig(
@@ -116,9 +161,9 @@ my_config = RunConfig(
 
 **PS** : je n'ai trouvé que cette solution 
 
-Les résulats des scores sont renseignés dans un fichier exel :  ```./data/ouput```
+Les résultats des scores sont renseignés dans un fichier exel :  ```./data/ouput```
 
-Il y a dans ce fichier l'évaluation des métriques suivante : 
+Il y a dans ce fichier l'évaluation des métriques suivantes : 
 - answer_correctness
 - answer_relevancy
 - faithfulness
