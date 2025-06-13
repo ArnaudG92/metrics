@@ -49,11 +49,11 @@ blaaaaa
 
 ### 4- Retrieval
 
-blaaaaa
+```metrics_simple_retrieval.py```
 
 ### 5- Re-ranking
 
-blaaaaa
+```metrics_simple_retrieval.py```
 
 ### 6- Les réponses du LLM
 
@@ -69,16 +69,58 @@ Pour les métriques qui n'utilisent pas de **LLM**, on retrouve la liste suivant
 - Meteor
 - MoverScore
 
-[Implémentation en Python](#)
+[Implémentation en Python](#python-retrieval-sans-llm)
 
 Pour les métriques qui utilisent un **LLM**, on retrouve la liste suivante (expliqué dans la carte mentale) : 
-- RAGAS -> de nombreuses métriques qui analysent les réponses sur plusieurs points ([plus d'info](#))
+- RAGAS -> de nombreuses métriques qui analysent les réponses sur plusieurs points ([plus d'info](#ragas-evaluation))
 
 
 ## Les applications en Python
 
-explications du code... 
+### Python Retrieval sans LLM
 
+Le fichier python correspondant : ```metrics_for_LLM_response_reference.py```
+
+Dans ce fichier, à partir d'une réponse de référence et d'une question génerée, on calcul les différentes métriques que l'on affiche dans un graphique à bar.
+
+Analyse des résultats : 
+- Bleu score ne comprends pas les synonyme (à part si on veut des mots clés, pas très utile)
+- Rouge score intéressant : 🛑 Répétition de mot sans sens augmente le score ?
+- BERTScore : rien à re-dire
+
+### RAGAS evaluation
+
+Le fichier python correspondant :
+- ```evaluate_llm_with_ragas_local.py``` (utilisation d'un LLM local)
+- ```evaluate_llm_with_ragas_aws.py``` (utilisation d'un LLM sur AWS)
+
+Pour modifier les données de traitement : ```./data/input```
+
+Dans ce fichier, à partir d'une réponse de référence et d'une question génerée, on calcul les différentes métriques que l'on affiche dans un graphique à bar.
+
+🛑 Problème de timeOut, la LLM prends trop sont temps pour répondre, on est donc obligé de l'empecher de travailler sur plusieurs métriques simultanément 
+
+``` Python 
+my_config = RunConfig(
+    max_workers=1,
+)
+```
+
+**PS** : je n'ai trouvé que cette solution 
+
+Les résulats des scores sont renseignés dans un fichier exel :  ```./data/ouput```
+
+Il y a dans ce fichier l'évaluation des métriques suivante : 
+- answer_correctness
+- answer_relevancy
+- faithfulness
+- context_precision
+- context_recall
+
+
+🛑 Le temps de réponse sur l'Evaluation est **très long**
+
+🛑 Analyse des résultats à faire 
 
 ## A faire ... 
 
