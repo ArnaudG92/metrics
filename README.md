@@ -47,7 +47,9 @@ L’objectif global est de comparer ces différentes approches pour identifier l
 
 ### 1- La création d’un dataset d’évaluation
 
-blaaaaa
+La première étape pour évaluer un RAG est la création d'un dataset de question/réponse. Pour cela on utilise un document fictif (pour les tests) d'un [club de foot](data/output/story.md) inventé. On compare différentes méthodes possibles : 
+
+- [RAGAS](ragas-dataset)
 
 ### 2- L'Embeddings
 
@@ -99,6 +101,25 @@ Pour les métriques qui utilisent un **LLM**, on retrouve la liste suivante (exp
 
 
 ## Les applications en Python
+
+### RAGAS Dataset
+
+Premier résultats évalués par Chatgpt : 
+
+
+| #  | Question                                                                 | Extrait de la réponse                                                                                               | Note /15 | Évaluation                                                                                          |
+|----|--------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|----------|-----------------------------------------------------------------------------------------------------|
+| 1  | What was the significance of the 2023 season for Étoile de la Plaine?    | The 2023 season marked a meteoric rise... stadium becoming full... community impact                                 | 14.5     | Très bonne question et réponse. Légère coupure à la fin du texte, mais excellent alignement Q/R.     |
+| 2  | What is the significance of Étoile de la Plaine’s success in 2023?       | ...meteoric rise, talented young players, community engagement...                                                    | 14       | Bonne profondeur dans la réponse, mais question très proche de la 1 — risque de redondance.         |
+| 3  | What is the role of Étoile de la Plaine in the club’s success?           | ...combinaison de talents, coach, engagement communautaire...                                                        | 11       | Question mal formulée, un peu floue. La réponse est bonne, mais la Q doit être clarifiée.           |
+| 4  | What was the significance of the Étoile de la Plaine’s success in 2023?  | ...joueurs comme Thomas, Nadir, Hugo... style de jeu sous Coach Mireille Dupont...                                   | 13.5     | Bonne réponse, mais formulation redondante avec Q1 et Q2. Et erreur grammaticale ("the Étoile").    |
+| 5  | What is the significance of the match against AS Montroc?                | ...4-3 après prolongation... Nadir’s hat trick, Hugo’s save... transformation locale...                              | 15       | Question spécifique et bien ciblée. Réponse parfaite, riche et cohérente.                           |
+| 6  | What is the role of the captain, Thomas Duvauchel, in the story?         | ...vision du jeu, distribution, calme...                                                                             | 13       | Bonne réponse mais trop courte. Question claire mais "in the story" pourrait être reformulé.         |
+| 7  | What is the significance of the team’s rise to prominence?               | ...jeunes joueurs, stratégie, communauté, passion des fans...                                                        | 14       | Bonne généralisation. La réponse illustre bien les causes profondes de leur ascension.              |
+
+
+**Premier problème : contexte toujours le même et questions qui se répètent**
+
 
 ### Python Retrieval 
 
